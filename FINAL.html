@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth; /* Smooth scrolling for all anchors */
+            background-color: #F8F0E3; /* Main background color - Soft Warm Grey */
+            color: #4A4A4A; /* Primary Text Color - Rich Dark Brown */
+            /* Subtle noise background for added texture */
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB2aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0iIzAwMDAwMCIgZmlsbC1vcGFjaXR5PSIwLjA1IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0wIDQwTDIwIDMwTDAgMjB6TTQwIDBMMjAgMTBMNDAgMjB6TTIwIDQwTDAgMzBMMjAgMjB6TTQwIDIwTDIwIDEwTDMwIDBIMjBMMTAgMEwwIDEwTDIwIDIwTDMwIDIwTDIwIDMwTDMwIDQwem0wIDBMMjAgNDBMMTMuMzMzIDQwbC01Ljc3NC0xMC4wMDdMMCA0MC4wMDdMMCAzMC43NzRMNC4yMjYgMjcuNDQ3TDIwIDM3LjQ0N0wzNS43NzQgMjcuNDQ3TDI0LjIyNiAyNy40NDdMNDAgNDAuMDA3TDQwIDB6IiBmaWxsPSIjMDAwMDAwIi8+PC9nPg0KPC9zdmc+');
+            background-repeat: repeat;
+        }
+        /* Custom scroll-to-top button styling */
+        #scroll-to-top {
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed position */
+            bottom: 20px; /* Place at the bottom */
+            right: 20px; /* Place at the right */
+            z-index: 1000; /* Ensure it's above other content */
+            background-color: #E97451; /* Primary Accent Terracotta Orange */
+            color: #FFFFFF; /* Text on accent button */
+            padding: 14px 20px; /* Slightly larger padding */
+            border-radius: 9999px; /* Fully rounded */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More prominent shadow */
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        #scroll-to-top:hover {
+            background-color: #6A8EAE; /* Secondary Accent Muted Blue Hover */
+            transform: scale(1.15); /* More pronounced hover effect */
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        /* General section styling for consistent look */
+        section {
+            padding: 4rem 1.5rem; /* Increased vertical padding */
+            margin-top: 2rem; /* Consistent top margin */
+            border-radius: 0.75rem; /* Rounded corners for sections */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12); /* More prominent shadow for sections */
+            border: 1px solid #E0D8CC; /* Subtle border, lighter than main background */
+            background-color: #FFFFFF; /* Section background - White */
+        }
+
+        /* Card styling for skills and projects */
+        .card {
+            background-color: #FFFBF5; /* Card background - slightly lighter than section */
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Stronger default shadow for cards */
+            transition: all 0.3s ease;
+            border: 1px solid #E0D8CC; /* Consistent border */
+        }
+        .card:hover {
+            transform: translateY(-8px) scale(1.03); /* More lift and scale on hover */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* Even stronger shadow on hover */
+        }
+
+        /* Styles for scroll-based animation */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px); /* Increased initial translation */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Slower transition */
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Input focus glow */
+        input:focus, textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(233, 116, 81, 0.5); /* Terracotta Orange glow */
+        }
+
+        /* Hero image hover effect */
+        .hero-image:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Primary button gradient and hover */
+        .primary-button {
+            background-image: linear-gradient(to right, #E97451 0%, #D85C3A 100%); /* Terracotta Orange gradient */
+            transition: all 0.3s ease;
+        }
+        .primary-button:hover {
+            background-position: 100% 0; /* Shift gradient on hover */
+            background-image: linear-gradient(to right, #6A8EAE 0%, #4F738F 100%); /* Muted Blue gradient on hover */
+            color: #4A4A4A; /* Text color change on hover */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+        }
+    </style>
+</head>
+<body class="text-[#4A4A4A]">
+
+    <!-- Header/Navigation -->
+    <header class="bg-[#F8F0E3] shadow-xl py-4 px-6 md:px-12 fixed w-full z-10">
+        <nav class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-[#4A4A4A] rounded-md p-2 hover:bg-[#E0D8CC] transition-colors duration-300">MyPortfolio</a>
+            <ul class="hidden md:flex space-x-6">
+                <li><a href="#about" class="text-[#4A4A4A] hover:text-[#6A8EAE] font-medium transition-colors duration-300 rounded-md p-2 hover:bg-[#E0D8CC]">About</a></li>
+                <li><a href="#skills" class="text-[#4A4A4A] hover:text-[#6A8EAE] font-medium transition-colors duration-300 rounded-md p-2 hover:bg-[#E0D8CC]">Skills</a></li>
+                <li><a href="#projects" class="text-[#4A4A4A] hover:text-[#6A8EAE] font-medium transition-colors duration-300 rounded-md p-2 hover:bg-[#E0D8CC]">Projects</a></li>
+                <li><a href="#contact" class="text-[#4A4A4A] hover:text-[#6A8EAE] font-medium transition-colors duration-300 rounded-md p-2 hover:bg-[#E0D8CC]">Contact</a></li>
+            </ul>
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button id="mobile-menu-button" class="md:hidden text-[#4A4A4A] hover:text-[#6A8EAE] focus:outline-none focus:ring-2 focus:ring-[#E97451] rounded-md p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#F8F0E3] mt-4 rounded-lg shadow-lg">
+            <ul class="flex flex-col space-y-2 p-4">
+                <li><a href="#about" class="block text-[#4A4A4A] hover:text-[#6A8EAE] font-medium transition-colors duration-300 rounded-md p-2 hover:bg-[#E0D8CC]">About</a></li>
+                <li><a href="#skills" class="block text-[#4A4A4A] hover:text-[#6A8EAE] font-medium transition-colors duration-300 rounded-md p-2 hover:bg-[#E0D8CC]">Skills</a></li>
+                <li><a href="#projects" class="block text-[#4A4A4A] hover:text-[#6A8EAE] font-medium transition-colors duration-300 rounded-md p-2 hover:bg-[#E0D8CC]">Projects</a></li>
+                <li><a href="#contact" class="block text-[#4A4A4A] hover:text-[#6A8EAE] font-medium transition-colors duration-300 rounded-md p-2 hover:bg-[#E0D8CC]">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="pt-20"> <!-- Added padding-top to account for fixed header -->
+
+        <!-- Hero Section -->
+        <section id="hero" class="bg-[#F8F0E3] text-[#4A4A4A] py-20 md:py-32 text-center rounded-b-lg shadow-xl">
+            <div class="container mx-auto px-6">
+                <!-- Placeholder for profile picture. Consider replacing with your actual image. -->
+                <img src="https://placehold.co/180x180/F8F0E3/4A4A4A?text=DD" alt="Profile Picture of Dwarkadhish Deshmukh" class="rounded-full w-44 h-44 mx-auto mb-8 border-4 border-[#4A4A4A] shadow-lg object-cover hero-image">
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">Hi, I'm <span class="text-[#6A8EAE]">Dwarkadhish Deshmukh</span></h1>
+                <p class="text-xl md:text-2xl mb-10 font-light text-[#4A4A4A]">A Passionate Web Developer & Designer</p>
+                <a href="#projects" class="primary-button text-[#FFFFFF] font-bold py-4 px-10 rounded-full shadow-lg transform hover:scale-105 inline-block text-lg">View My Work</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="bg-[#FFFFFF] text-[#4A4A4A] mx-4 md:mx-auto max-w-5xl fade-in-section">
+            <div class="container mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-[#E97451] mb-12 flex items-center justify-center">
+                    <svg class="w-8 h-8 mr-3 text-[#6A8EAE]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    About Me
+                </h2>
+                <div class="flex flex-col md:flex-row items-center md:space-x-10">
+                    <div class="md:w-1/3 mb-8 md:mb-0">
+                        <!-- Placeholder for About Me image. Consider replacing with a relevant image. -->
+                        <img src="https://placehold.co/350x350/FFFFFF/4A4A4A?text=About+Me" alt="Image representing Dwarkadhish's work" class="rounded-lg shadow-lg w-full h-auto object-cover border border-[#E0D8CC]">
+                    </div>
+                    <div class="md:w-2/3 text-lg text-[#4A4A4A] leading-relaxed text-justify">
+                        <p class="mb-5">
+                            Hello! I'm Dwarkadhish Deshmukh, a dedicated and creative web developer with a strong passion for building beautiful, functional, and user-friendly digital experiences. With 2+ years of experience in the industry, I specialize in front-end development, bringing designs to life with clean and efficient code.
+                        </p>
+                        <p class="mb-5">
+                            My journey in web development began with a fascination for how websites are built, which quickly evolved into a drive to create my own. I love solving complex problems and continuously learning new technologies to stay at the forefront of the ever-evolving web landscape.
+                        </p>
+                        <p>
+                            Outside of coding, I enjoy playing cricket, watching movies, and exploring new places. I'm always open to new opportunities and collaborations, so feel free to reach out!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="bg-[#FFFFFF] text-[#4A4A4A] mx-4 md:mx-auto max-w-5xl fade-in-section">
+            <div class="container mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-[#E97451] mb-12">My Skills</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <!-- Skill Card: HTML5 -->
+                    <div class="card text-center">
+                        <h3 class="text-xl font-semibold text-[#6A8EAE] mb-3 flex items-center justify-center">
+                            <svg class="w-8 h-8 mr-2 text-[#E97451]" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.5 0l1.5 17.25L12 24l9-6.75L22.5 0zM18.5 4H5.5l.75 8.5h11.5l-.75 8.5L12 19l3.375-1.125.75-8.5H7.5l-.75-8.5H18.5z"/>
+                            </svg>
+                            HTML5
+                        </h3>
+                    </div>
+
+                    <!-- Skill Card: CSS -->
+                    <div class="card text-center">
+                        <h3 class="text-xl font-semibold text-[#6A8EAE] mb-3 flex items-center justify-center">
+                            <svg class="w-8 h-8 mr-2 text-[#E97451]" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.5 0l1.5 17.25L12 24l9-6.75L22.5 0zM18.5 4H5.5l.75 8.5h11.5l-.75 8.5L12 19l3.375-1.125.75-8.5H7.5l-.75-8.5H18.5z"/>
+                            </svg>
+                            CSS
+                        </h3>
+                    </div>
+
+                    <!-- Skill Card: C -->
+                    <div class="card text-center">
+                        <h3 class="text-xl font-semibold text-[#6A8EAE] mb-3 flex items-center justify-center">
+                            <svg class="w-8 h-8 mr-2 text-[#E97451]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                            </svg>
+                            C
+                        </h3>
+                    </div>
+
+                    <!-- Skill Card: C++ -->
+                    <div class="card text-center">
+                        <h3 class="text-xl font-semibold text-[#6A8EAE] mb-3 flex items-center justify-center">
+                            <svg class="w-8 h-8 mr-2 text-[#E97451]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                            </svg>
+                            C++
+                        </h3>
+                    </div>
+
+                    <!-- Skill Card: MS Word -->
+                    <div class="card text-center">
+                        <h3 class="text-xl font-semibold text-[#6A8EAE] mb-3 flex items-center justify-center">
+                            <svg class="w-8 h-8 mr-2 text-[#E97451]" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8zM16 18H8v-2h8zM16 14H8v-2h8zM13 9V3.5L18.5 9H13z"/>
+                            </svg>
+                            MS Word
+                        </h3>
+                    </div>
+
+                    <!-- Skill Card: MS Excel -->
+                    <div class="card text-center">
+                        <h3 class="text-xl font-semibold text-[#6A8EAE] mb-3 flex items-center justify-center">
+                            <svg class="w-8 h-8 mr-2 text-[#E97451]" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8zM16 18H8v-2h8zM16 14H8v-2h8zM13 9V3.5L18.5 9H13z"/>
+                            </svg>
+                            MS Excel
+                        </h3>
+                    </div>
+
+                    <!-- Skill Card: PowerPoint Presentation -->
+                    <div class="card text-center">
+                        <h3 class="text-xl font-semibold text-[#6A8EAE] mb-3 flex items-center justify-center">
+                            <svg class="w-8 h-8 mr-2 text-[#E97451]" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8zM16 18H8v-2h8zM16 14H8v-2h8zM13 9V3.5L18.5 9H13z"/>
+                            </svg>
+                            PowerPoint Presentation
+                        </h3>
+                    </div>
+
+                    <!-- Skill Card: GitHub -->
+                    <div class="card text-center">
+                        <h3 class="text-xl font-semibold text-[#6A8EAE] mb-3 flex items-center justify-center">
+                            <svg class="w-8 h-8 mr-2 text-[#E97451]" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.417 2.865 8.163 6.837 9.48.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.004.07 1.531 1.032 1.531 1.032.892 1.529 2.341 1.089 2.91.833.091-.647.35-1.088.636-1.338-2.22-.253-4.555-1.119-4.555-4.934 0-1.09.39-1.984 1.029-2.675-.103-.253-.446-1.265.098-2.647 0 0 .84-.268 2.75 1.022A9.607 9.607 0 0110 4.872c.85.004 1.701.114 2.503.337 1.909-1.29 2.747-1.022 2.747-1.022.546 1.382.202 2.394.099 2.647.64.691 1.028 1.585 1.028 2.675 0 3.823-2.339 4.681-4.566 4.92.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C17.13 18.164 20 14.418 20 10.017 20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            GitHub
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="bg-[#FFFFFF] text-[#4A4A4A] mx-4 md:mx-auto max-w-5xl fade-in-section">
+            <div class="container mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-[#E97451] mb-12">My Projects</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <!-- Project Card 1: First Year Daily TimeTable -->
+                    <div class="card overflow-hidden">
+                        <img src="https://placehold.co/600x400/FFFBF5/4A4A4A?text=TimeTable+Project" alt="Screenshot of First Year Daily TimeTable project" class="w-full h-64 object-cover rounded-t-lg">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-[#6A8EAE] mb-3">First Year Daily TimeTable</h3>
+                            <p class="text-[#4A4A4A] mb-5 leading-relaxed">
+                                I developed my college's first-year timetable page using HTML and CSS. This project showcases basic web page structuring and styling skills.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-5">
+                                <span class="bg-[#E0D8CC] text-[#4A4A4A] text-sm px-4 py-1.5 rounded-full font-medium">HTML</span>
+                                <span class="bg-[#E0D8CC] text-[#4A4A4A] text-sm px-4 py-1.5 rounded-full font-medium">CSS</span>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <a href="https://dwarkadhishd.github.io/Dwarkadhish/lab10.html" target="_blank" rel="noopener noreferrer" class="text-[#E97451] hover:text-[#6A8EAE] font-semibold flex items-center transition-colors duration-300">
+                                    View Project
+                                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                    </svg>
+                                </a>
+                                <a href="https://github.com/dwarkadhishd/Dwarkadhish/blob/main/lab10.html" target="_blank" rel="noopener noreferrer" class="text-[#4A4A4A] hover:text-[#6A8EAE] flex items-center transition-colors duration-300">
+                                    <svg class="w-6 h-6 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.417 2.865 8.163 6.837 9.48.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.004.07 1.531 1.032 1.531 1.032.892 1.529 2.341 1.089 2.91.833.091-.647.35-1.088.636-1.338-2.22-.253-4.555-1.119-4.555-4.934 0-1.09.39-1.984 1.029-2.675-.103-.253-.446-1.265.098-2.647 0 0 .84-.268 2.75 1.022A9.607 9.607 0 0110 4.872c.85.004 1.701.114 2.503.337 1.909-1.29 2.747-1.022 2.747-1.022.546 1.382.202 2.394.099 2.647.64.691 1.028 1.585 1.028 2.675 0 3.823-2.339 4.681-4.566 4.92.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C17.13 18.164 20 14.418 20 10.017 20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 2: Job Application Page -->
+                    <div class="card overflow-hidden">
+                        <img src="https://placehold.co/600x400/FFFBF5/4A4A4A?text=Job+App+Page" alt="Screenshot of Job Application Page project" class="w-full h-64 object-cover rounded-t-lg">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-[#6A8EAE] mb-3">Job Application Page</h3>
+                            <p class="text-[#4A4A4A] mb-5 leading-relaxed">
+                                I created a responsive Job Application Page using HTML and CSS. This project demonstrates my ability to design and implement forms for data collection.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-5">
+                                <span class="bg-[#E0D8CC] text-[#4A4A4A] text-sm px-4 py-1.5 rounded-full font-medium">HTML</span>
+                                <span class="bg-[#E0D8CC] text-[#4A4A4A] text-sm px-4 py-1.5 rounded-full font-medium">CSS</span>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <a href="https://dwarkadhishd.github.io/Dwarkadhish/lB12.HTML" target="_blank" rel="noopener noreferrer" class="text-[#E97451] hover:text-[#6A8EAE] font-semibold flex items-center transition-colors duration-300">
+                                    View Project
+                                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                    </svg>
+                                </a>
+                                <a href="https://github.com/dwarkadhishd/Dwarkadhish/blob/main/lB12.HTML" target="_blank" rel="noopener noreferrer" class="text-[#4A4A4A] hover:text-[#6A8EAE] flex items-center transition-colors duration-300">
+                                    <svg class="w-6 h-6 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.417 2.865 8.163 6.837 9.48.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.004.07 1.531 1.032 1.531 1.032.892 1.529 2.341 1.089 2.91.833.091-.647.35-1.088.636-1.338-2.22-.253-4.555-1.119-4.555-4.934 0-1.09.39-1.984 1.029-2.675-.103-.253-.446-1.265.098-2.647 0 0 .84-.268 2.75 1.022A9.607 9.607 0 0110 4.872c.85.004 1.701.114 2.503.337 1.909-1.29 2.747-1.022 2.747-1.022.546 1.382.202 2.394.099 2.647.64.691 1.028 1.585 1.028 2.675 0 3.823-2.339 4.681-4.566 4.92.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C17.13 18.164 20 14.418 20 10.017 20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="bg-[#FFFFFF] text-[#4A4A4A] mx-4 md:mx-auto max-w-5xl fade-in-section">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-[#E97451] mb-12">Get In Touch</h2>
+                <p class="text-lg mb-10 text-[#4A4A4A] leading-relaxed">
+                    Have a question, a project idea, or just want to say hi? Feel free to reach out!
+                </p>
+                <form class="max-w-xl mx-auto space-y-6">
+                    <input type="text" placeholder="Your Name" class="w-full p-4 rounded-md bg-[#FFFFFF] border border-[#E0D8CC] text-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#E97451] placeholder-[#A0A0A0]">
+                    <input type="email" placeholder="Your Email" class="w-full p-4 rounded-md bg-[#FFFFFF] border border-[#E0D8CC] text-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#E97451] placeholder-[#A0A0A0]">
+                    <textarea placeholder="Your Message" rows="7" class="w-full p-4 rounded-md bg-[#FFFFFF] border border-[#E0D8CC] text-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-[#E97451] placeholder-[#A0A0A0]"></textarea>
+                    <button type="submit" class="primary-button text-[#FFFFFF] font-bold py-4 px-12 rounded-full shadow-lg transform hover:scale-105 text-lg">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Scroll-to-top button -->
+    <button id="scroll-to-top" title="Go to top">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v14"></path>
+        </svg>
+    </button>
+
+    <!-- Footer -->
+    <footer class="bg-[#F8F0E3] py-8 px-6 md:px-12 mt-8 text-center text-[#4A4A4A] rounded-t-lg shadow-inner border-t border-[#E0D8CC]">
+        <div class="container mx-auto">
+            <p>&copy; 2025 Dwarkadhish Deshmukh. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <!-- GitHub Link -->
+                <a href="https://github.com/dwarkadhishd" target="_blank" rel="noopener noreferrer" class="hover:text-[#6A8EAE] transition-colors duration-300">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.417 2.865 8.163 6.837 9.48.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.004.07 1.531 1.032 1.531 1.032.892 1.529 2.341 1.089 2.91.833.091-.647.35-1.088.636-1.338-2.22-.253-4.555-1.119-4.555-4.934 0-1.09.39-1.984 1.029-2.675-.103-.253-.446-1.265.098-2.647 0 0 .84-.268 2.75 1.022A9.607 9.607 0 0110 4.872c.85.004 1.701.114 2.503.337 1.909-1.29 2.747-1.022 2.747-1.022.546 1.382.202 2.394.099 2.647.64.691 1.028 1.585 1.028 2.675 0 3.823-2.339 4.681-4.566 4.92.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C17.13 18.164 20 14.418 20 10.017 20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
+                    </svg>
+                </a>
+                <!-- LinkedIn Link (Placeholder) -->
+                <a href="https://www.linkedin.com/in/dwarkadhish-deshmukh?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="hover:text-[#6A8EAE] transition-colors duration-300">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.444-2.136 2.939v5.667H9.351V9.495h3.414v1.561h.045c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.27 2.378 4.27 5.462v6.222zM5.337 7.433a2.062 2.062 0 01-2.064-2.061 2.062 2.062 0 012.064-2.066 2.062 2.062 0 012.065 2.066 2.062 2.062 0 01-2.065 2.061zm1.785 13.019H3.55v-11.66h3.572v11.66zM12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0z" clip-rule="evenodd"></path>
+                    </svg>
+                </a>
+                <!-- Twitter Link (Placeholder) -->
+                <a href="https://x.com/Dwarkadhish_D" class="hover:text-[#6A8EAE] transition-colors duration-300">
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045C7.177 8.126 4.14 6.512 1.6 3.017c-1.053 1.81-1.667 3.925-.522 6.022-.244-.065-.479-.14-.71-.203v.077c0 3.245 2.31 5.967 5.39 6.592-.534.145-1.096.22-1.672.22-.408 0-.803-.04-.119-.083.858 2.11 2.645 3.65 4.98 3.691-2.29 1.8-5.196 2.473-8.086 2.473-.53 0-1.05-.03-1.56-.092C2.984 20.554 6.13 22 9.57 22c10.277 0 15.908-8.536 15.908-15.91 0-.24-.005-.48-.013-.71z"></path>
+                    </svg>
+                </a>
+            </div>
+            
+            <p class="mt-4 flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2 text-[#E97451]" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                </svg>
+                <a href="mailto:your.email@example.com" class="hover:text-[#E97451] transition-colors duration-300 ml-1">dwarkadhish.deshmukh@gmail.com</a>
+            </p>
+
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                // Close mobile menu after clicking a link
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Scroll-to-top button functionality
+        const scrollToTopButton = document.getElementById('scroll-to-top');
+
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollToTopButton.style.display = "block";
+            } else {
+                scrollToTopButton.style.display = "none";
+            }
+        };
+
+        scrollToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Scroll-based animation using Intersection Observer
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.fade-in-section');
+
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.1 // 10% of the section must be visible to trigger
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Stop observing once visible
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
